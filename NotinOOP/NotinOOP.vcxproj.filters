@@ -13,10 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{f9ed8eac-86ef-42cd-8574-b5f84d621850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{9a77ffb9-3025-4e39-9f67-ee6d4a36a3ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{df69eba6-7df7-4b7d-8a3a-8ae6721c3fd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NotinOOP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Review.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Discount.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusDiscount.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="BrandDiscount.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Review.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Discount.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusDiscount.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="BrandDiscount.h">
+      <Filter>Models</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

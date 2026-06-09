@@ -127,7 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BonusDiscount.cpp" />
+    <ClCompile Include="BrandDiscount.cpp" />
+    <ClCompile Include="Discount.cpp" />
     <ClCompile Include="NotinOOP.cpp" />
+    <ClCompile Include="Review.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BonusDiscount.h" />
+    <ClInclude Include="BrandDiscount.h" />
+    <ClInclude Include="Discount.h" />
+    <ClInclude Include="Review.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
