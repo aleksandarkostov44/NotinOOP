@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="NotinOOP/NotinOOP.vcxproj" />
+  <Project Path="NotinOOP/NotinOOP.vcxproj" Id="24bcdb9d-5360-451b-8861-d4948848477b" />
 </Solution>
