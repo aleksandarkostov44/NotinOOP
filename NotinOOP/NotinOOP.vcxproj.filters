@@ -22,36 +22,36 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Models\BonusDiscount.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Models</Filter>
     </ClCompile>
     <ClCompile Include="Models\BrandDiscount.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Models</Filter>
     </ClCompile>
     <ClCompile Include="Models\Discount.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Models</Filter>
     </ClCompile>
     <ClCompile Include="Models\Fragrance.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Models</Filter>
     </ClCompile>
     <ClCompile Include="Models\Review.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Models\BonusDiscount.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\BrandDiscount.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Discount.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Models\Review.h">
+      <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="Models\Fragrance.h">
-      <Filter>Header Files</Filter>
+      <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="Models\Review.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Models\Discount.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\BrandDiscount.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\BonusDiscount.h">
+      <Filter>Models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
