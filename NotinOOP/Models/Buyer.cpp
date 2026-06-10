@@ -39,6 +39,7 @@ Buyer::Buyer(const Buyer& other) : User(other) {
     copyDiscounts(other.discounts);
 }
 
+// Оператор за присвояване
 Buyer& Buyer::operator=(const Buyer& other) {
     if (this != &other) {
         User::operator=(other);
@@ -104,7 +105,6 @@ void Buyer::viewCart() const {
     std::cout << "Обща сума без отстъпки: " << total << " лв.\n";
 }
 
-// Визуализация на всички покупки (PENDING, DELIVERED, CANCELED)
 void Buyer::viewPurchases() const {
     std::cout << "--- Всички ваши поръчки ---\n";
         if (purchases.empty()) {
@@ -217,7 +217,7 @@ void Buyer::recommend(const std::vector<Fragrance>& marketCatalog) const {
     std::vector<FamilyCount> counts;
 
     for (const auto& f : wishlist) {
-        std::string currentFamily = f.getFragranceFamily(); [cite:46]
+        std::string currentFamily = f.getFragranceFamily();
             bool found = false;
 
         for (auto& c : counts) {
@@ -242,12 +242,11 @@ void Buyer::recommend(const std::vector<Fragrance>& marketCatalog) const {
         }
     }
 
-    std::cout << "Вашата любима нотка е: " << favoriteFamily << ". Ето нашите препоръки за Вас:\n"; [cite:46]
+    std::cout << "Вашата любима нотка е: " << favoriteFamily << ". Ето нашите препоръки за Вас:\n";
 
         std::vector<Fragrance> candidates;
     for (const auto& marketFrag : marketCatalog) {
         if (marketFrag.getFragranceFamily() == favoriteFamily) {
-            [cite:47]
             bool alreadyInWishlist = false;
             for (const auto& wishFrag : wishlist) {
                 if (marketFrag.getFragranceId() == wishFrag.getFragranceId()) {

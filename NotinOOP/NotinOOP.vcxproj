@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\NotinOOP.cpp" />
+    <ClCompile Include="Models\Admin.cpp" />
     <ClCompile Include="Models\BonusDiscount.cpp" />
     <ClCompile Include="Models\BrandDiscount.cpp" />
     <ClCompile Include="Models\Buyer.cpp" />
@@ -134,10 +136,12 @@
     <ClCompile Include="Models\Fragrance.cpp" />
     <ClCompile Include="Models\Review.cpp" />
     <ClCompile Include="Models\User.cpp" />
-    <ClCompile Include="NotinOOP.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Models\Purchase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\NotinOOP.h" />
+    <ClInclude Include="Models\Admin.h" />
     <ClInclude Include="Models\BonusDiscount.h" />
     <ClInclude Include="Models\BrandDiscount.h" />
     <ClInclude Include="Models\Buyer.h" />
