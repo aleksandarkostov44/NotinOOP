@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -129,17 +129,23 @@
   <ItemGroup>
     <ClCompile Include="Models\BonusDiscount.cpp" />
     <ClCompile Include="Models\BrandDiscount.cpp" />
+    <ClCompile Include="Models\Buyer.cpp" />
     <ClCompile Include="Models\Discount.cpp" />
     <ClCompile Include="Models\Fragrance.cpp" />
     <ClCompile Include="Models\Review.cpp" />
+    <ClCompile Include="Models\User.cpp" />
     <ClCompile Include="NotinOOP.cpp" />
+    <ClCompile Include="Models\Purchase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Models\BonusDiscount.h" />
     <ClInclude Include="Models\BrandDiscount.h" />
+    <ClInclude Include="Models\Buyer.h" />
     <ClInclude Include="Models\Discount.h" />
     <ClInclude Include="Models\Fragrance.h" />
     <ClInclude Include="Models\Review.h" />
+    <ClInclude Include="Models\Purchase.h" />
+    <ClInclude Include="Models\User.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
