@@ -19,4 +19,6 @@ public:
     bool checkPassword(const std::string& pass) const;
 
     virtual void help() const = 0;
+
+    const std::string& getPassword() const;
 };

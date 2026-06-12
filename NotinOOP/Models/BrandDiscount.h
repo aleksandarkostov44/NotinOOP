@@ -10,4 +10,6 @@ public:
     BrandDiscount(unsigned int id, double percent, const std::string& bName);
 
     double apply(double currentPrice, const std::string& fragranceBrand) const override;
+
+    const std::string& getBrand() const;
 };

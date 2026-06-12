@@ -10,3 +10,8 @@ double BonusDiscount::apply(double currentPrice, const std::string& fragranceBra
 
     return (finalPrice > 0.0) ? finalPrice : 0.0;
 }
+
+double BonusDiscount::getAmount() const
+{
+    return bonus;
+}

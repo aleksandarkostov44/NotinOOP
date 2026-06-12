@@ -39,7 +39,7 @@ public:
     void viewBought() const;
     void viewPurchases() const;
 
-    void makeReview(Fragrance& fragrance, unsigned short rating, const std::string& comment);
+    void makeReview(Fragrance& fragrance, unsigned int rId, unsigned short rating, const std::string& comment);
     bool cancelPurchase(unsigned int purchaseId);
     void addDiscount(Discount* discount);
 
@@ -47,4 +47,9 @@ public:
     void recommend(const std::vector<Fragrance>& marketCatalog) const;
 
     void help() const override;
+
+    void loadPurchase(const Purchase& purchase);
+    bool deliverPurchase(unsigned int purchaseId);
+
+    void viewWishlist() const;
 };

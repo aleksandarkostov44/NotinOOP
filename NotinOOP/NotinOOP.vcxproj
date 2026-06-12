@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\NotinOOP.cpp" />
+    <ClCompile Include="Data\FileStorage.cpp" />
     <ClCompile Include="Models\Admin.cpp" />
     <ClCompile Include="Models\BonusDiscount.cpp" />
     <ClCompile Include="Models\BrandDiscount.cpp" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\NotinOOP.h" />
+    <ClInclude Include="Data\FileStorage.h" />
     <ClInclude Include="Models\Admin.h" />
     <ClInclude Include="Models\BonusDiscount.h" />
     <ClInclude Include="Models\BrandDiscount.h" />

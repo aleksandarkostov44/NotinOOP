@@ -15,3 +15,7 @@ const std::string& User::getUsername() const {
 bool User::checkPassword(const std::string& pass) const {
     return password == pass;
 }
+
+const std::string& User::getPassword() const {
+    return password;
+}

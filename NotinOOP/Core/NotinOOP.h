@@ -6,6 +6,9 @@
 #include "../Models/Admin.h"
 #include "../Models/Fragrance.h"
 #include "../Models/Purchase.h"
+#include "../Models/BonusDiscount.h"
+#include "../Models/BrandDiscount.h"
+#include "../Models/Discount.h"
 
 class NotinOOP {
 private:

@@ -1,5 +1,6 @@
 #include "NotinOOP.h"
 #include <iostream>
+#include "../Data/FileStorage.h"
 
 NotinOOP* NotinOOP::instance = nullptr;
 
@@ -23,7 +24,14 @@ NotinOOP::NotinOOP() {
     nextFragranceId = 1;
     nextPurchaseId = 1;
 
-    users.push_back(new Admin(nextUserId++, "admin", "admin123"));
+    FileStorage::loadCatalog(catalog, nextFragranceId, "catalog.txt");
+    FileStorage::loadUsers(users, nextUserId, "users.txt");
+
+    if (users.empty()) {
+        users.push_back(new Admin(nextUserId++, "admin", "admin123"));
+    }
+
+        FileStorage::loadRelations(users, catalog, nextPurchaseId, "carts.txt", "wishlists.txt", "discounts.txt", "purchases.txt");
 }
 
 NotinOOP::~NotinOOP() {
@@ -140,6 +148,9 @@ void NotinOOP::processBuyerCommand(Buyer* buyer, const std::string& command) {
     else if (command == "view-bought") {
         buyer->viewBought();
     }
+    else if (command == "view-wishlist") {
+        buyer->viewWishlist();
+    }
     else if (command == "add-to-wishlist") {
         std::string fName;
         std::cin >> fName;
@@ -212,7 +223,8 @@ void NotinOOP::processBuyerCommand(Buyer* buyer, const std::string& command) {
         bool found = false;
         for (auto& f : catalog) {
             if (f.getName() == fName) {
-                buyer->makeReview(f, rating, comment);
+                static unsigned int globalReviewId = 1;
+                buyer->makeReview(f, globalReviewId++, rating, comment);
                 found = true;
                 break;
             }
@@ -270,24 +282,62 @@ void NotinOOP::processAdminCommand(Admin* admin, const std::string& command) {
     else if (command == "deliver") {
         unsigned int pId;
         std::cin >> pId;
-
         bool delivered = false;
+
         for (User* u : users) {
             if (Buyer* b = dynamic_cast<Buyer*>(u)) {
-                for (Purchase p : b->getPurchases()) {
-                    if (p.getPurchaseId() == pId) {
-                        std::cout << "Намерена поръчка при потребител " << b->getUsername() << ". (Изисква ъпдейт на масива)\n";
-                        delivered = true;
-                    }
+                if (b->deliverPurchase(pId)) {
+                    delivered = true;
+                    break;
                 }
             }
         }
 
-        if (!delivered) {
-            std::cout << "Грешка: Поръчка #" << pId << " не беше намерена.\n";
+        if (delivered) {
+            std::cout << "Поръчка #" << pId << " е маркирана като ДОСТАВЕНА.\n";
         }
         else {
-            std::cout << "Поръчка #" << pId << " е маркирана като ДОСТАВЕНА.\n";
+            std::cout << "Грешка: Поръчка #" << pId << " не беше намерена или вече е обработена.\n";
+        }
+    }
+    else if (command == "grant-discount") {
+        std::string targetUsername;
+        int type;
+        double percent;
+        std::cin >> targetUsername >> type >> percent;
+
+        Buyer* targetBuyer = nullptr;
+        for (User* u : users) {
+            if (u->getUsername() == targetUsername) {
+                targetBuyer = dynamic_cast<Buyer*>(u);
+                break;
+            }
+        }
+
+        if (!targetBuyer) {
+            std::cout << "Грешка: Не е намерен купувач с потребителско име '" << targetUsername << "'.\n";
+        }
+        else {
+            static unsigned int nextDiscountId = 1;
+            if (type == 1) {
+                targetBuyer->addDiscount(new Discount(nextDiscountId++, percent));
+                std::cout << "Успешно раздаден базов ваучер (" << percent << "%) на " << targetUsername << "\n";
+            }
+            else if (type == 2) {
+                double amount;
+                std::cin >> amount;
+                targetBuyer->addDiscount(new BonusDiscount(nextDiscountId++, percent, amount));
+                std::cout << "Успешно раздаден Бонус ваучер (" << percent << "% + " << amount << " лв.) на " << targetUsername << "\n";
+            }
+            else if (type == 3) {
+                std::string brand;
+                std::cin >> brand;
+                targetBuyer->addDiscount(new BrandDiscount(nextDiscountId++, percent, brand));
+                std::cout << "Успешно раздаден Бранд ваучер (" << percent << "% за марка " << brand << ") на " << targetUsername << "\n";
+            }
+            else {
+                std::cout << "Грешка: Невалиден тип ваучер (използвайте 1, 2 или 3).\n";
+            }
         }
     }
     else {
@@ -304,7 +354,13 @@ void NotinOOP::run() {
         std::cin >> command;
 
         if (command == "end") {
-            std::cout << "Запазване на данните (предстои имплементация) и изход...\n";
+            std::cout << "Запазване на всички данни и релации...\n";
+            FileStorage::saveCatalog(catalog, "catalog.txt");
+            FileStorage::saveUsers(users, "users.txt");
+
+            FileStorage::saveRelations(users, "carts.txt", "wishlists.txt", "discounts.txt", "purchases.txt");
+
+            std::cout << "Системата се затвори успешно.\n";
             break;
         }
 

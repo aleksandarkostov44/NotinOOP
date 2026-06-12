@@ -10,3 +10,8 @@ double BrandDiscount::apply(double currentPrice, const std::string& fragranceBra
 
     return currentPrice;
 }
+
+const std::string& BrandDiscount::getBrand() const
+{
+    return brandName;
+}

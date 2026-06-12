@@ -39,7 +39,6 @@ Buyer::Buyer(const Buyer& other) : User(other) {
     copyDiscounts(other.discounts);
 }
 
-// Оператор за присвояване
 Buyer& Buyer::operator=(const Buyer& other) {
     if (this != &other) {
         User::operator=(other);
@@ -132,10 +131,10 @@ void Buyer::addDiscount(Discount* discount) {
     if (discount) discounts.push_back(discount);
 }
 
-void Buyer::makeReview(Fragrance& fragrance, unsigned short rating, const std::string& comment) {
-    Review newReview(0, fragrance.getName(), this->userId, comment, rating);
-        fragrance.addReview(newReview);
-        std::cout << "Ревюто за " << fragrance.getName() << " беше споделено успешно!\n";
+void Buyer::makeReview(Fragrance& fragrance, unsigned int rId, unsigned short rating, const std::string& comment) {
+    Review newReview(rId, fragrance.getName(), this->userId, comment, rating);
+    fragrance.addReview(newReview);
+    std::cout << "Ревюто за " << fragrance.getName() << " беше споделено успешно!\n";
 }
 
 bool Buyer::cancelPurchase(unsigned int purchaseId) {
@@ -282,10 +281,37 @@ void Buyer::help() const {
     std::cout << " 6. view-cart\n";
     std::cout << " 7. view-bought\n";
     std::cout << " 8. view-purchases\n";
-    std::cout << " 9. recommend\n";
-    std::cout << " 10. checkout\n";
-    std::cout << " 11. cancel <purchase-id>\n";
-    std::cout << " 12. make-review <fragrance-name> <rating> <comment>\n";
-    std::cout << " 13. logout\n";
+    std::cout << " 9. view-wishlist\n";
+    std::cout << " 10. recommend\n";
+    std::cout << " 11. checkout\n";
+    std::cout << " 12. cancel <purchase-id>\n";
+    std::cout << " 13. make-review <fragrance-name> <rating> <comment>\n";
+    std::cout << " 14. logout\n";
     std::cout << "=================================\n";
+}
+
+void Buyer::loadPurchase(const Purchase& purchase) {
+    purchases.push_back(purchase);
+}
+
+bool Buyer::deliverPurchase(unsigned int purchaseId) {
+    for (auto& p : purchases) {
+        if (p.getPurchaseId() == purchaseId && p.getState() == PurchaseState::PENDING) {
+            p.setState(PurchaseState::DELIVERED);
+            return true;
+        }
+    }
+    return false;
+}
+
+void Buyer::viewWishlist() const {
+    std::cout << "--- Твоите любими парфюми (Wishlist) ---\n";
+    if (wishlist.empty()) {
+        std::cout << "Списъкът е празен.\n";
+        return;
+    }
+    for (const auto& f : wishlist) {
+        std::cout << " - " << f.getName() << " (" << f.getBrand() << ") | " << f.getPrice() << " лв.\n";
+    }
+    std::cout << "----------------------------------------\n";
 }
