@@ -28,7 +28,7 @@ public:
 
     void setPrice(double newPrice);
     void addQuantity(unsigned int amount);
-    bool reduceQuantity(unsigned int amount);
+    void reduceQuantity();
 
     void addReview(const Review& review);
     bool removeReview(unsigned int reviewId);

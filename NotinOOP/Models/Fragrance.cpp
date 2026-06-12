@@ -28,12 +28,10 @@ void Fragrance::addQuantity(unsigned int amount) {
     quantity += amount;
 }
 
-bool Fragrance::reduceQuantity(unsigned int amount) {
-    if (quantity >= amount) {
-        quantity -= amount;
-        return true;
+void Fragrance::reduceQuantity() {
+    if (quantity > 0) {
+        quantity--;
     }
-    return false;
 }
 
 void Fragrance::addReview(const Review& review) {

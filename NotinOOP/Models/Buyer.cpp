@@ -2,6 +2,8 @@
 #include "BonusDiscount.h"
 #include "BrandDiscount.h"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 Buyer::Buyer(unsigned int id, const std::string& uname, const std::string& pass, double initialBalance)
     : User(id, uname, pass), balance(initialBalance) {}
@@ -150,56 +152,40 @@ bool Buyer::cancelPurchase(unsigned int purchaseId) {
     return false;
 }
 
-void Buyer::checkout(unsigned int& nextPurchaseId) {
+void Buyer::checkout(unsigned int& nextPurchaseId, std::vector<Fragrance>& globalCatalog) {
     if (cart.empty()) {
-        std::cout << "Количката е празна! Няма какво да купите.\n";
+        std::cout << "Количката ви е празна!\n";
         return;
     }
 
-    double baseTotal = 0.0;
-    for (const auto& f : cart) {
-        baseTotal += f.getPrice();
+    double totalCost = 0;
+    for (const auto& item : cart) {
+        totalCost += item.getPrice();
     }
 
-    Discount* bestDiscount = nullptr;
-    double bestPrice = baseTotal;
-    int bestDiscountIdx = -1;
-
-    for (size_t i = 0; i < discounts.size(); ++i) {
-        double currentDiscountedTotal = 0.0;
-        for (const auto& f : cart) {
-            currentDiscountedTotal += discounts[i]->apply(f.getPrice(), f.getBrand());
-        }
-        if (currentDiscountedTotal < bestPrice) {
-            bestPrice = currentDiscountedTotal;
-            bestDiscount = discounts[i];
-            bestDiscountIdx = static_cast<int>(i);
-        }
-    }
-
-    if (balance < bestPrice) {
-        std::cout << "Нямате достатъчна наличност в сметката! Нужни: " << bestPrice << " лв. Имате: " << balance << " лв.\n";
+    if (balance < totalCost) {
+        std::cout << "Грешка: Недостатъчен баланс! Обща сума: " << totalCost
+            << " лв., а вашият баланс е: " << balance << " лв.\n";
         return;
     }
 
-    std::vector<Fragrance> finalItems = cart;
-    if (bestDiscount) {
-        for (auto& f : finalItems) {
-            double newPrice = bestDiscount->apply(f.getPrice(), f.getBrand());
-            f.setPrice(newPrice);
+    for (const auto& cartItem : cart) {
+        for (auto& catalogItem : globalCatalog) {
+            if (catalogItem.getFragranceId() == cartItem.getFragranceId()) {
+                catalogItem.reduceQuantity();
+                break;
+            }
         }
-        std::cout << "Автоматично беше използван най-добрият ваучер! Спестихте: " << (baseTotal - bestPrice) << " лв.\n";
-
-        delete discounts[bestDiscountIdx];
-        discounts.erase(discounts.begin() + bestDiscountIdx);
     }
 
-    balance -= bestPrice;
-        Purchase newPurchase(nextPurchaseId++, this->userId, finalItems);
-        purchases.push_back(newPurchase);
+    balance -= totalCost;
+    Purchase newPurchase(nextPurchaseId++, this->userId, cart);
+    purchases.push_back(newPurchase);
 
-        cart.clear();
-        std::cout << "Покупката приключи успешно! Създадена е поръчка #" << newPurchase.getPurchaseId() << "\n";
+    cart.clear();
+
+    std::cout << "Поръчка #" << newPurchase.getPurchaseId()
+        << " беше направена успешно! Сума: " << totalCost << " лв.\n";
 }
 
 void Buyer::recommend(const std::vector<Fragrance>& marketCatalog) const {
@@ -265,10 +251,28 @@ void Buyer::recommend(const std::vector<Fragrance>& marketCatalog) const {
     }
 
     size_t recommendCount = (candidates.size() < 3) ? candidates.size() : 3;
-        for (size_t i = 0; i < recommendCount; ++i) {
-            size_t idx = (i * 7) % candidates.size();
-            std::cout << " * " << candidates[idx].getName() << " от марката " << candidates[idx].getBrand() << " (" << candidates[idx].getPrice() << " лв.)\n";
+    srand(time(0));
+
+    std::vector<size_t> pickedIndices;
+
+    while (pickedIndices.size() < recommendCount) {
+        size_t idx = rand() % candidates.size();
+
+        bool alreadyPicked = false;
+        for (size_t picked : pickedIndices) {
+            if (picked == idx) {
+                alreadyPicked = true;
+                break;
+            }
         }
+
+        if (!alreadyPicked) {
+            pickedIndices.push_back(idx);
+            std::cout << " * " << candidates[idx].getName()
+                << " от марката " << candidates[idx].getBrand()
+                << " (" << candidates[idx].getPrice() << " лв.)\n";
+        }
+    }
 }
 
 void Buyer::help() const {
@@ -282,11 +286,13 @@ void Buyer::help() const {
     std::cout << " 7. view-bought\n";
     std::cout << " 8. view-purchases\n";
     std::cout << " 9. view-wishlist\n";
-    std::cout << " 10. recommend\n";
-    std::cout << " 11. checkout\n";
-    std::cout << " 12. cancel <purchase-id>\n";
-    std::cout << " 13. make-review <fragrance-name> <rating> <comment>\n";
-    std::cout << " 14. logout\n";
+    std::cout << " 10. view-catalog\n";
+    std::cout << " 11. get-rating\n";
+    std::cout << " 12. recommend\n";
+    std::cout << " 13. checkout\n";
+    std::cout << " 14. cancel <purchase-id>\n";
+    std::cout << " 15. make-review <fragrance-name> <rating> <comment>\n";
+    std::cout << " 16. logout\n";
     std::cout << "=================================\n";
 }
 

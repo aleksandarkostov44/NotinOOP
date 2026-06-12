@@ -4,8 +4,6 @@
 int main() {
     system("chcp 65001 > nul");
 
-    std::cout << "Стартиране на системата...\n";
-
     NotinOOP* app = NotinOOP::getInstance();
     app->run();
 

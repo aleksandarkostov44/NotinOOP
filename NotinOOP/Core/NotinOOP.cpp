@@ -140,7 +140,7 @@ void NotinOOP::processBuyerCommand(Buyer* buyer, const std::string& command) {
         buyer->viewCart();
     }
     else if (command == "checkout") {
-        buyer->checkout(nextPurchaseId);
+        buyer->checkout(nextPurchaseId, catalog);
     }
     else if (command == "view-purchases") {
         buyer->viewPurchases();
@@ -150,6 +150,34 @@ void NotinOOP::processBuyerCommand(Buyer* buyer, const std::string& command) {
     }
     else if (command == "view-wishlist") {
         buyer->viewWishlist();
+    }
+    else if (command == "view-catalog") {
+        std::cout << "--- Каталог на NotinOOP ---\n";
+        for (const auto& f : catalog) {
+            std::cout << " * " << f.getName() << " (" << f.getBrand() << ") - "
+                << f.getPrice() << " лв. | Наличност: " << f.getQuantity()
+                << " бр. | Рейтинг: " << f.getRating() << "/5\n";
+        }
+        std::cout << "---------------------------\n";
+    }
+    else if (command == "get-rating") {
+        std::string fName;
+        std::cin >> fName;
+        bool found = false;
+
+        for (const auto& f : catalog) {
+            if (f.getName() == fName) {
+                std::cout << "Рейтингът на " << fName << " е: "
+                    << f.getRating() << " / 5 (на база "
+                    << f.getReviews().size() << " ревюта)\n";
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            std::cout << "Парфюм с такова име не беше намерен в каталога.\n";
+        }
     }
     else if (command == "add-to-wishlist") {
         std::string fName;
@@ -181,9 +209,14 @@ void NotinOOP::processBuyerCommand(Buyer* buyer, const std::string& command) {
         bool found = false;
         for (const auto& f : catalog) {
             if (f.getName() == fName) {
-                buyer->addToCart(f);
-                std::cout << fName << " беше добавен в количката!\n";
                 found = true;
+                if (f.getQuantity() == 0) {
+                    std::cout << "Грешка: Парфюмът '" << fName << "' в момента е изчерпан и не може да бъде добавен в количката.\n";
+                }
+                else {
+                    buyer->addToCart(f);
+                    std::cout << fName << " беше добавен в количката!\n";
+                }
                 break;
             }
         }
@@ -243,6 +276,15 @@ void NotinOOP::processAdminCommand(Admin* admin, const std::string& command) {
     }
     else if (command == "help") {
         admin->help();
+    }
+    else if (command == "view-catalog") {
+        std::cout << "--- Каталог на NotinOOP ---\n";
+        for (const auto& f : catalog) {
+            std::cout << " * " << f.getName() << " (" << f.getBrand() << ") - "
+                << f.getPrice() << " лв. | Наличност: " << f.getQuantity()
+                << " бр. | Рейтинг: " << f.getRating() << "/5\n";
+        }
+        std::cout << "---------------------------\n";
     }
     else if (command == "create-fragrance") {
         std::string name, brand, family;

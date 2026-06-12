@@ -7,11 +7,12 @@ Admin::Admin(unsigned int id, const std::string& uname, const std::string& pass)
 void Admin::help() const {
     std::cout << "=== Налични команди за Администратор ===\n";
     std::cout << " 1. block-user <username>\n";
-    std::cout << " 2. create-fragrance <name> <brand> <price> <fragranceFamily>\n";
+    std::cout << " 2. create-fragrance <name> <brand> <price> <fragranceFamily> <quantity>\n";
     std::cout << " 3. add-quantity <fragrance-name> <quantity>\n";
     std::cout << " 4. deliver <purchase-id>\n";
     std::cout << " 5. remove-review <fragrance-id> <review-id>\n";
-    std::cout << " 6. logout\n";
+    std::cout << " 6. view-catalog\n";
+    std::cout << " 7. logout\n";
     std::cout << "========================================\n";
 }
 

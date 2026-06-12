@@ -43,7 +43,7 @@ public:
     bool cancelPurchase(unsigned int purchaseId);
     void addDiscount(Discount* discount);
 
-    void checkout(unsigned int& nextPurchaseId);
+    void checkout(unsigned int& nextPurchaseId, std::vector<Fragrance>& globalCatalog);
     void recommend(const std::vector<Fragrance>& marketCatalog) const;
 
     void help() const override;
